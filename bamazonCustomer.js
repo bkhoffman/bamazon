@@ -21,12 +21,13 @@ function showProducts(){
     if (err) throw err;
     printTable(res);
     console.log("--".repeat(40));
-    orderProducts();
+    let itemsObj = res;
+    orderProducts(itemsObj);
   });
-  db.end();
+  
 };
 
-function orderProducts(){
+function orderProducts(itemsObj){
   console.log("What would you like to buy?");
   inquirer.prompt([{
     name: "itemID",
@@ -35,6 +36,16 @@ function orderProducts(){
     name: "quantity",
     message: "How many would you like to purchase? "
   }]).then(function(userChoice){
-    
+    let userChoiceID = userChoice.itemID
+    let userChoiceQty = userChoice.quantity
+    console.log("user choice id: " + userChoiceID + "\nqty chosen: " + userChoiceQty);
+    checkStock(userChoiceID, userChoiceQty)
   })
+};
+
+function checkStock(id, qty){
+  db.query('SELECT * FROM products WHERE item_id = '+ id, function(err, res){
+    console.log(res);
+  })
+  db.end();
 };
