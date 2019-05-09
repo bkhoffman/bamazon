@@ -50,9 +50,44 @@ function checkStock(id, qty){
     console.log("user choice id: " + id + "\nqty chosen: " + qty);
     if(qty <= res[0].stock_quantity){
       console.log(res[0].product_name + " is in stock!" + "\nYour total is: " + res[0].price*qty)
+      let inventory = res[0].stock_quantity;
+      db.query(
+        "UPDATE products SET ? WHERE ?",
+        [
+          {
+            stock_quantity: inventory - qty
+          },
+          {
+            item_id: id
+          }
+        ],
+        function(err) {
+          if (err) throw err;
+        }
+      );
+      shopAgain();
     }else{
-      console.log("Insuffient Inventory. There are currently only " + res[0].stock_quantity + " in stock.")
+      console.log("Insuffient Inventory. There are currently only " + res[0].stock_quantity + " in stock. \nPlease try again")
+      orderProducts();
     }
   })
-  db.end();
+  
+  // showProducts()
+};
+
+function shopAgain(){
+  inquirer.prompt([{
+    name: "shopAgain",
+    type: "confirm",
+    message: "Would you like to continue shopping? (y/n)",
+    default: false
+  }]).then(function(userResponse){
+    console.log(userResponse);
+    if(userResponse){
+      showProducts()
+    }else if (!userResponse){
+      console.log("Thanks for shopping!");
+      db.end();
+    }
+  })
 };
