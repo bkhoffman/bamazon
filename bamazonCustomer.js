@@ -71,8 +71,6 @@ function checkStock(id, qty){
       orderProducts();
     }
   })
-  
-  // showProducts()
 };
 
 function shopAgain(){
