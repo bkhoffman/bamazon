@@ -77,15 +77,15 @@ function checkStock(id, qty){
 
 function shopAgain(){
   inquirer.prompt([{
-    name: "shopAgain",
+    name: "confirm",
     type: "confirm",
-    message: "Would you like to continue shopping? (y/n)",
+    message: "Would you like to continue shopping?",
     default: false
   }]).then(function(userResponse){
     console.log(userResponse);
-    if(userResponse){
+    if(userResponse.confirm){
       showProducts()
-    }else if (!userResponse){
+    }else{
       console.log("Thanks for shopping!");
       db.end();
     }
