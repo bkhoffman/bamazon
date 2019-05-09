@@ -45,7 +45,14 @@ function orderProducts(itemsObj){
 
 function checkStock(id, qty){
   db.query('SELECT * FROM products WHERE item_id = '+ id, function(err, res){
-    console.log(res);
+    if (err) throw err;
+    console.log(res[0]);
+    console.log("user choice id: " + id + "\nqty chosen: " + qty);
+    if(qty <= res[0].stock_quantity){
+      console.log(res[0].product_name + " is in stock!" + "\nYour total is: " + res[0].price*qty)
+    }else{
+      console.log("Insuffient Inventory. There are currently only " + res[0].stock_quantity + " in stock.")
+    }
   })
   db.end();
 };
