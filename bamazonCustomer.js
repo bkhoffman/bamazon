@@ -35,7 +35,7 @@ function orderProducts(itemsObj){
   },{
     name: "quantity",
     message: "How many would you like to purchase? "
-  }]).then(function(userChoice){
+  }]).then((userChoice) => {
     let userChoiceID = userChoice.itemID
     let userChoiceQty = userChoice.quantity
     // console.log("user choice id: " + userChoiceID + "\nqty chosen: " + userChoiceQty);
@@ -44,7 +44,7 @@ function orderProducts(itemsObj){
 };
 //used passed in id and qty to query db to check stock and calc total cost
 function checkStock(id, qty){
-  db.query('SELECT * FROM products WHERE item_id = '+ id, function(err, res){
+  db.query('SELECT * FROM products WHERE item_id = '+ id, (err, res) => {
     if (err) throw err;
     // console.log(res[0]);
     // console.log("user choice id: " + id + "\nqty chosen: " + qty);
@@ -82,7 +82,7 @@ function shopAgain(){
     type: "confirm",
     message: "Would you like to continue shopping?",
     default: false
-  }]).then(function(userResponse){
+  }]).then((userResponse) => {
     // console.log(userResponse);
     if(userResponse.confirm){
       showProducts()
