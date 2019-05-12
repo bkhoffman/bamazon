@@ -70,7 +70,9 @@ function checkStock(id, qty){
       );
       shopAgain();
     }else{
-      console.log("Insuffient Inventory. There are currently only " + res[0].stock_quantity + " in stock. \nPlease try again")
+      console.log("**".repeat(40));
+      console.log(chalk.green("Insuffient Inventory. There are currently only " + res[0].stock_quantity + " in stock. \nPlease try again"))
+      console.log("**".repeat(40));
       orderProducts();
     }
   })
